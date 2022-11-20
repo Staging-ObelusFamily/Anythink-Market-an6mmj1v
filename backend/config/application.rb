@@ -12,6 +12,9 @@ module AnythinkMarket
     config.load_defaults 5.2
     config.api_only = true
 
+    # Allow codespace host
+    config.hosts << ".anythink.market"
+    config.hosts << ".#{ENV['GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN']}"
 
     config.to_prepare do
       DeviseController.respond_to :html, :json

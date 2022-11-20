@@ -9,9 +9,6 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Allow codespace host
-  config.hosts << ".#{ENV['GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN']}"
-
   # Show full error reports.
   config.consider_all_requests_local = true
 
