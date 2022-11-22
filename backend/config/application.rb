@@ -15,8 +15,7 @@ module AnythinkMarket
     config.api_only = true
 
      # Allowed hosts
-    config.hosts << ".anythink.market"
-    config.hosts << ".#{CODESPACE_HOST}" if CODESPACE_HOST.present?
+    config.hosts = nil
 
     config.to_prepare do
       DeviseController.respond_to :html, :json
