@@ -4,6 +4,8 @@ on:
     branches:
       - main
       - k8s
+env:
+  imageTag: ${{ github.repository/\//- }}-latest
 jobs:
   check-secret:
     environment: Production
@@ -44,10 +46,10 @@ jobs:
         id: build-image-backend
         run: |
           docker build \
-            -t ${{ steps.login-ecr.outputs.registry }}/anythink-backend:${{ github.repository }}-latest \
+            -t ${{ steps.login-ecr.outputs.registry }}/anythink-backend:${{ env.imageTag }} \
             -f backend/Dockerfile.aws \
             .
-          docker push ${{ steps.login-ecr.outputs.registry }}/anythink-backend:${{ github.repository }}-latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/anythink-backend:${{ env.imageTag }}
 
   build-frontend:
     name: Build frontend images
@@ -74,10 +76,10 @@ jobs:
         id: build-image-frontend
         run: |
           docker build \
-            -t ${{ steps.login-ecr.outputs.registry }}/anythink-frontend:${{ github.repository }}-latest \
+            -t ${{ steps.login-ecr.outputs.registry }}/anythink-frontend:${{ env.imageTag }} \
             -f frontend/Dockerfile.aws \
             .
-          docker push ${{ steps.login-ecr.outputs.registry }}/anythink-frontend:${{ github.repository }}-latest
+          docker push ${{ steps.login-ecr.outputs.registry }}/anythink-frontend:${{ env.imageTag }}
 
   deploy:
     name: Deploy latest tag using helm
@@ -107,5 +109,5 @@ jobs:
       - name: Deploy
         run: |
           helm upgrade --install --timeout 10m app ./charts/app/ \
-              --set frontend.image.tag=${{ github.repository }}-latest \
-              --set backend.image.tag=${{ github.repository }}-latest
+              --set frontend.image.tag=${{ env.imageTag }} \
+              --set backend.image.tag=${{ env.imageTag }}
