@@ -41,7 +41,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Set the image tag
-        run: echo IMAGE_TAG=${ github.repository/\//- }-latest >> $GITHUB_ENV
+        run: echo IMAGE_TAG=${ GITHUB_REPOSITORY/\//- }-latest >> $GITHUB_ENV
 
       - name: Build, tag, and push backend image to Amazon ECR
         id: build-image-backend
@@ -74,7 +74,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Set the image tag
-        run: echo IMAGE_TAG=${ github.repository/\//- }-latest >> $GITHUB_ENV
+        run: echo IMAGE_TAG=${ GITHUB_REPOSITORY/\//- }-latest >> $GITHUB_ENV
 
       - name: Build, tag, and push frontend image to Amazon ECR
         id: build-image-frontend
@@ -111,7 +111,7 @@ jobs:
         run: helm lint ./charts/app/
 
       - name: Set the image tag
-        run: echo IMAGE_TAG=${ github.repository/\//- }-latest >> $GITHUB_ENV
+        run: echo IMAGE_TAG=${ GITHUB_REPOSITORY/\//- }-latest >> $GITHUB_ENV
 
       - name: Deploy
         run: |
